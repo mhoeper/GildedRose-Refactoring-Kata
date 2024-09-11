@@ -1,16 +1,25 @@
 ﻿using Xunit;
 using System.Collections.Generic;
 using GildedRoseKata;
+using GildedRoseKata.Factories;
+using GildedRoseKata.Repositories;
 
 namespace GildedRoseTests;
 
 public class GildedRoseTest
 {
+    private GildedRose CreateGildedRose(IList<Item> items)
+    {
+        var factory = new UpdateStrategyFactory();
+        var repository = new ItemRepositoryForTest(items); 
+        return new GildedRose(factory, repository); 
+    }
+
     [Fact]
     public void UpdateQuality_TestName()
     {
         var items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
         app.UpdateQuality();
         Assert.Equal("foo", items[0].Name);
     }
@@ -20,7 +29,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Normal Item", 
             SellIn = 10, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -33,7 +42,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Aged Brie", 
             SellIn = 10, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -46,7 +55,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert", 
             SellIn = 11, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -59,7 +68,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert",
             SellIn = 10, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -72,7 +81,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert",
             SellIn = 5, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -85,7 +94,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Backstage passes to a TAFKAL80ETC concert",
             SellIn = 0, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -98,7 +107,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros",
             SellIn = 10, Quality = 80 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -111,7 +120,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Normal Item",
             SellIn = 0, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -124,7 +133,7 @@ public class GildedRoseTest
     {
         var items = new List<Item> { new Item { Name = "Aged Brie",
             SellIn = 0, Quality = 20 } };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -139,7 +148,7 @@ public class GildedRoseTest
             new Item { Name = "Aged Brie", SellIn = 10, Quality = 50 },
             new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 50 },
         };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 
@@ -156,7 +165,7 @@ public class GildedRoseTest
         var items = new List<Item> {
             new Item { Name = "Normal Item", SellIn = 10, Quality = 0 }
         };
-        var app = new GildedRose(items);
+        var app = CreateGildedRose(items);
 
         app.UpdateQuality();
 

@@ -4,19 +4,13 @@
     {
         protected override int GetQuantityChange(Item item)
         {
-            if (item.SellIn < 0)
+            return item.SellIn switch
             {
-                return -item.Quality;
-            }
-            if (item.SellIn < 5)
-            {
-                return 3;
-            }
-            if (item.SellIn < 10)
-            {
-                return 2;
-            }
-            return 1;
+                < 0 => -item.Quality,
+                < 5 => 3,
+                < 10 => 2,
+                _ => 1
+            };
         }
     }
 }

@@ -3,18 +3,18 @@ using GildedRoseKata.Strategies;
 
 namespace GildedRoseKata.Factories
 {
-    public static class UpdateStrategyFactory
+    public class UpdateStrategyFactory
     {
-        public static IUpdateStrategy Create(string name)
+        public IUpdateStrategy Create(string name)
         {
-            switch (name)
+            return name switch
             {
-                case "Backstage passes to a TAFKAL80ETC concert": return new BackstagePassesUpdateStrategy();
-                case "Aged Brie": return new AgedBrieUpdateStrategy();
-                case "Sulfuras, Hand of Ragnaros": return new SulfurasUpdateStrategy();
-                case "Conjured Mana Cake": return new ConjuredUpdateStrategy();
-                default: return new BaseUpdateStrategy();
-            }
+                "Backstage passes to a TAFKAL80ETC concert" => new BackstagePassesUpdateStrategy(),
+                "Aged Brie" => new AgedBrieUpdateStrategy(),
+                "Sulfuras, Hand of Ragnaros" => new SulfurasUpdateStrategy(),
+                "Conjured Mana Cake" => new ConjuredUpdateStrategy(),
+                _ => new BaseUpdateStrategy(),
+            };
         }
     }
 }
