@@ -15,26 +15,38 @@ public class Program
         services.AddSingleton<IItemRepository, ItemRepository>(); 
     }
 
+    private static int? GetDays(string[] args)
+    {
+        if (args.Length > 0)
+        {
+            if (int.TryParse(args[0], out var days))
+            {
+                return days;
+            }
+        }
+        return null;
+    }
+
     public static void Main(string[] args)
     {
         var serviceCollection = new ServiceCollection();
         ConfigureServices(serviceCollection); 
-
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         var gildedRose = serviceProvider.GetService<GildedRose>(); 
 
         Console.WriteLine("OMGHAI!");
 
-        int days = 2;
-        if (args.Length > 0)
+        var days = GetDays(args); 
+        if (days == null)
         {
-            days = int.Parse(args[0]) + 1;
+            Console.WriteLine("Usage: GildedRose <days>");
+            return; 
         }
 
-        for (var i = 0; i < days; i++)
+        for (var day = 0; day <= days; day++)
         {
-            gildedRose.PrintDayInformation(i);
+            gildedRose.PrintDayInformation(day);
             gildedRose.UpdateQuality();
         }
     }

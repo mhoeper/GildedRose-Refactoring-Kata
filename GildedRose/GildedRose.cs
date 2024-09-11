@@ -18,10 +18,10 @@ public class GildedRose
 
     public void UpdateQuality()
     {
-        for (var i = 0; i < Items.Count; i++)
+        foreach (var v in Items)
         {
-            var updateStrategy = _factory.Create(Items[i].Name);
-            updateStrategy.Update(Items[i]); 
+            var updateStrategy = _factory.Create(v.Name);
+            updateStrategy.Update(v); 
         }
     }
 
